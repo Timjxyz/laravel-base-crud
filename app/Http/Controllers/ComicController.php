@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comic;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ComicController extends Controller
 {
@@ -16,6 +17,7 @@ class ComicController extends Controller
     {
         $comics= Comic::all();
         return view('comic.index', compact('comics'));
+        
     }
 
     /**
@@ -36,6 +38,17 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $request->validate(
+            [
+                'thumb' => 'required|url',
+                'title' => 'required|min:5',
+                'type' => ['required', Rule::in(['comic book', 'graphic novel'])],
+                'description' => 'required|min:20'
+            ]
+        );
+
+        $data = $request->all();
         $data=$request->all();
     
         $comic=new Comic();  
@@ -72,7 +85,7 @@ class ComicController extends Controller
      */
     public function edit(Comic $comic)
     {   
-        //
+        return view('comic.edit', compact('comic'));
     }
 
     /**
@@ -82,9 +95,24 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Comic $comic)
     {
-        //
+        $request->validate(
+            [ 'thumb' => 'required|url',
+            'title' => 'required|min:5',
+            'type' => ['required', Rule::in(['comic book', 'graphic novel'])],
+            'description' => 'required|min:20'
+            ]
+        );
+
+        
+        $data = $request->all();
+        $comic->update($data);
+
+        $comic->save();
+
+        return redirect()->route('comic.show', ['comic' => $comic->id]);
+
     }
 
     /**
@@ -93,8 +121,10 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+
+        return redirect()->route('comic.index')->with('status', 'Elemento cancellato!');
     }
 }

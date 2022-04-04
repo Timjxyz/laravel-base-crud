@@ -12,7 +12,7 @@
     <div><strong>Prezzo</strong>{{$comic->price}}€</div>
     <div><strong>Sale Date</strong>{{$comic->sale_date}}</div>
     <div><strong>Description</strong>{{$comic->description}}</div>
-    <a class="btn btn-primary mt_5" href="{{route('comic.index')}}" role="button">Torna al menù</a>
+    <a class="btn btn-success mt-5" href="{{route('comic.index')}}" role="button">Torna al menù</a>
 </div>
 @endsection
 

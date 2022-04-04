@@ -24,8 +24,15 @@
                     <td>{{$comic->type}}</td>
                     <td>{{$comic->sale_date}}</td>
                     <td>{{$comic->price}}€</td>
-                    <td>
+                    <td class="d-flex justify-content-between">
                       <a class="btn btn-primary" href="{{route('comic.show', $comic->id)}}" role="button">Visualizza</a>
+                      <a class="btn btn-warning" href="{{ route('comic.edit', $comic->id ) }}" role="button">Modifica</a>
+
+                            <form method="POST" action="{{route('comic.destroy', ['comic' => $comic->id])}}">
+                                @csrf
+                                @method('DELETE')
+                                <button type='submit' class="btn btn-danger">Elimina</button>
+                            </form>
                     </td>
                   </tr>
                   @endforeach
@@ -33,5 +40,6 @@
               </table>
               <a class="btn btn-warning" href="{{route('comic.create')}}" role="button">Inserisci nuovo fumetto</a>
 </div>
+
 @endsection
 

@@ -27,10 +27,11 @@
                     <td>
                       <a class="btn btn-primary" href="{{route('comic.show', $comic->id)}}" role="button">Visualizza</a>
                     </td>
-                </tr>
-            @endforeach
-        </tbody>
-      </table>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+              <a class="btn btn-warning" href="{{route('comic.create')}}" role="button">Inserisci nuovo fumetto</a>
 </div>
 @endsection
 
